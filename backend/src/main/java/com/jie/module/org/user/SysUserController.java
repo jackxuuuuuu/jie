@@ -87,9 +87,6 @@ public class SysUserController {
     @PreAuthorize("hasAnyRole('ADMIN','HR')")
     public Result<Void> resetPassword(@PathVariable Long id,
                                       @Validated @RequestBody ResetPasswordRequest req) {
-        if (req.getNewPassword() == null || req.getNewPassword().length() < 6) {
-            throw new BizException("密码长度不能少于6位");
-        }
         userService.resetPassword(id, req.getNewPassword());
         return Result.ok();
     }

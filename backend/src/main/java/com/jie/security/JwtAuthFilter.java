@@ -41,8 +41,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 Long userId = jwtUtils.getUserId(token);
                 // load full user from DB to get up-to-date roles/enabled status
                 try {
-                    // use userId to load by username (we store id as subject)
-                    // We need username – load user by id via a small helper
+                    // Load user entity and roles by userId extracted from JWT subject
                     UserDetails userDetails = userDetailsService.loadUserByUserId(userId);
                     UsernamePasswordAuthenticationToken auth =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

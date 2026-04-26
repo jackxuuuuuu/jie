@@ -33,8 +33,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public PageResult<UserDTO> listUsers(int pageNum, int pageSize, String keyword, Long deptId) {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
-                .like(StringUtils.hasText(keyword), SysUser::getRealName, keyword)
-                .or(StringUtils.hasText(keyword), w -> w.like(SysUser::getUsername, keyword))
+                .and(StringUtils.hasText(keyword), w -> w
+                        .like(SysUser::getRealName, keyword)
+                        .or()
+                        .like(SysUser::getUsername, keyword))
                 .eq(deptId != null, SysUser::getDeptId, deptId)
                 .orderByDesc(SysUser::getCreatedAt);
 

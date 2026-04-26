@@ -11,6 +11,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
+      # NOTE: 'always' re-runs schema/data SQL on every startup.
+      # Use 'never' or Flyway/Liquibase migrations for production.
       mode: always
       schema-locations: classpath:db/schema.sql
       data-locations: classpath:db/data.sql
